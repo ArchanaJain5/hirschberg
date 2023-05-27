@@ -22,24 +22,34 @@ public class LCS {
       String x2 = A.substring(m);
 
       // calculate the break point of k which is when compute_lcs(x1,y1)+compute(x2,y2) == compute_lcs(A,B)
-      int lcs = compute_lcs(A, B);
-      int k=0;
-      for(k=0;k<lenB;k++){
-        String y1 = B.substring(0,k);
-        String y2 = B.substring(k);
-        if(compute_lcs(x1,y1)+compute_lcs(x2, y2)==lcs)
-          break;
+      int[] lcs1 = compute_lcs(x1, B);
+
+      // reversing the strings
+      StringBuilder temp1 = new StringBuilder(x2);
+      String rev_x2 = temp1.reverse().toString();
+
+      StringBuilder temp2 = new StringBuilder(B);
+      String rev_B= temp2.reverse().toString();
+
+      int[] lcs2 = compute_lcs(rev_x2, rev_B);
+      int k=0,max=0;
+
+      for(int i=0;i<lenB;i++){
+       if(lcs1[i]+lcs2[lenB-i]>max){
+          max = lcs1[i]+lcs2[lenB-i];
+          k=i;
+       }
       }
 
       String y1 = B.substring(0, k);
       String y2 = B.substring(k);
 
-      String lcs1 = find(x1, y1);
-      String lcs2 = find(x2,y2);
+      String lc1 = find(x1, y1);
+      String lc2 = find(x2,y2);
 
-      return lcs1+lcs2;
+      return lc1+lc2;
   }
-  private int compute_lcs(String s1,String s2){
+  private int[] compute_lcs(String s1,String s2){
     int n = s1.length();
     int m = s2.length();
 
@@ -55,7 +65,7 @@ public class LCS {
         prev=(int[])(curr.clone());
     }
     
-    return prev[m];
+    return prev;
 
   }
 
