@@ -34,7 +34,7 @@ public class LCS {
       int[] lcs2 = compute_lcs(rev_x2, rev_B);
       int k=0,max=0;
 
-      for(int i=0;i<lenB;i++){
+      for(int i=0;i<=lenB;i++){
        if(lcs1[i]+lcs2[lenB-i]>max){
           max = lcs1[i]+lcs2[lenB-i];
           k=i;
