@@ -21,7 +21,7 @@ public class LCS {
       String x1 = A.substring(0, m);
       String x2 = A.substring(m);
 
-      // calculate the break point of k
+      // calculate the break point of k which is when compute_lcs(x1,y1)+compute(x2,y2) == compute_lcs(A,B)
       int lcs = compute_lcs(A, B);
       int k=0;
       for(k=0;k<lenB;k++){
@@ -30,6 +30,7 @@ public class LCS {
         if(compute_lcs(x1,y1)+compute_lcs(x2, y2)==lcs)
           break;
       }
+
       String y1 = B.substring(0, k);
       String y2 = B.substring(k);
 
@@ -43,15 +44,15 @@ public class LCS {
     int m = s2.length();
 
     int prev[]=new int[m+1];
-    int cur[]=new int[m+1];
-    for(int ind1=1;ind1<=n;ind1++){
-        for(int ind2=1;ind2<=m;ind2++){
-            if(s1.charAt(ind1-1)==s2.charAt(ind2-1))
-                cur[ind2] = 1 + prev[ind2-1];
+    int curr[]=new int[m+1];
+    for(int i=1;i<=n;i++){
+        for(int j=1;j<=m;j++){
+            if(s1.charAt(i-1)==s2.charAt(j-1))
+                curr[j] = 1 + prev[j-1];
             else
-                cur[ind2] = 0 + Math.max(prev[ind2],cur[ind2-1]);
+                curr[j] = 0 + Math.max(prev[j],curr[j-1]);
         }
-        prev=(int[])(cur.clone());
+        prev=(int[])(curr.clone());
     }
     
     return prev[m];
